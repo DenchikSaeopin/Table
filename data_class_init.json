@@ -1,0 +1,120 @@
+{
+  "ClassCaption": "Начальная модель",
+  "TablesName": "Initial",
+  "ClassSEQName": "",
+  "PrimaryKeyList": "",
+  "ColumnList": "",
+  "FieldList": [],
+  "InvisibleColumns": "id,shift,vacation,skill",
+  "PrivList": "",
+  "QuickSearch": "desc,name",
+  "ViewProperties": [
+    {
+      "name": { 
+        "Name": "Имя", 
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": true,
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    },       
+    {
+      "desc": { 
+        "Name": "Описание",  
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": true
+      } 
+    },        
+    {
+      "date": { 
+        "Name": "Дата записи",  
+        "PropType": "DATETIME", 
+        "DisplayFormat": "DD-MM-YYYY", 
+        "Align": "left", 
+        "Sortable": true, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    }, 
+    {
+      "salary": { 
+        "Name": "Зарплаты",  
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "Salary", 
+        "Align": "left", 
+        "Sortable": true, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    },
+    {
+      "shift_view": { 
+        "Name": "Смены",  
+        "PropType": "COMBO", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false, 
+        "ComboList": "1 смена=1;2 смена=2;3 смена=3", 
+        "KeyFieldName": "shift",
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    },
+    {
+      "vacation_view": { 
+        "Name": "Отпуск",  
+        "PropType": "data_class_vacation", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false, 
+        "KeyFieldName": "vacation", 
+        "LookupKeyFieldName": "id", 
+        "LookupResultFieldName": "vacation",
+        "IsMultiSelect": true,
+        "AllowBlank": false
+      }
+    },
+    {
+      "skill_view": { 
+        "Name": "Навыки",  
+        "PropType": "COMBO", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "KeyFieldName": "skill", 
+        "ComboClass": "data_class_skills", 
+        "LookupKeyFieldName": "skill_id",
+        "LookupResultFieldName": "skill",
+        "IsMultiSelect": false,
+        "AllowBlank": true
+      }   
+    },
+    {
+      "status": {
+        "Name": "Высвобожден(а)",  
+        "PropType": "CHECKBOX", 
+        "DisplayFormat": "checkbox", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": true  
+      }  
+    }
+  ],
+  "DefaultValues": [],
+  "SQLParams": []
+}

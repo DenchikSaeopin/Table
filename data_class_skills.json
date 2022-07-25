@@ -1,0 +1,39 @@
+{
+  "ClassCaption": "Навыки",
+  "TablesName": "Skills",
+  "ClassSEQName": "",
+  "PrimaryKeyList": "",
+  "ColumnList": "",
+  "FieldList": [],
+  "InvisibleColumns": "skill_id",
+  "PrivList": "",
+  "QuickSearch": "",
+  "ViewProperties": [
+    {
+      "skill": { 
+        "Name": "Навык", 
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    },             
+    {
+      "desc": { 
+        "Name": "Дополнительно",  
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false,
+        "AllowBlank": false
+      } 
+    }  
+  ],
+  "DefaultValues": [],
+  "SQLParams": []
+}

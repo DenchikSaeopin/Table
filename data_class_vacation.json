@@ -1,0 +1,48 @@
+{
+  "ClassCaption": "Отпуска",
+  "TablesName": "Vacation",
+  "ClassSEQName": "",
+  "PrimaryKeyList": "",
+  "ColumnList": "",
+  "FieldList": [],
+  "InvisibleColumns": "id",
+  "PrivList": "",
+  "QuickSearch": "desc",
+  "ViewProperties": [
+    {
+      "vacation": { 
+        "Name": "Сезон отпуска", 
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false
+      } 
+    },             
+    {
+      "date": { 
+        "Name": "Дата записи",  
+        "PropType": "DATETIME", 
+        "DisplayFormat": "DD-MM-YYYY", 
+        "Align": "left", 
+        "Sortable": true, 
+        "ReadOnly": false,
+        "IsMultiSelect": false
+      } 
+    }, 
+    {
+      "desc": { 
+        "Name": "Дополнительно",  
+        "PropType": "SIMPLE", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false,
+        "IsMultiSelect": false
+      } 
+    }  
+  ],
+  "DefaultValues": [],
+  "SQLParams": []
+}

@@ -1,0 +1,46 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  color: #474747;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: #333333;
+  margin-top: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.list {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  li {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+button {
+  font-family: 'Roboto', sans-serif;
+  color: #474747;
+  font-weight: 500;
+  background-color: transparent;
+  border: 1px solid #333333;
+  border-radius: 2px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: 0.1s ease;
+  &:hover, &:focus {
+    outline: none;
+    background-color: #e6e6e6;
+  }
+}
