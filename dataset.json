@@ -5,56 +5,56 @@
       "name": "Вася", 
       "desc": "Друг", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "17000", 
+      "salary": 17000, 
       "shift": "1", 
       "shift_view": "1 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
-      "status": true    
+      "status": 1    
     },
     { 
       "id": 2,  
       "name": "Витя", 
       "desc": "Сосед", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "10000", 
+      "salary": 10000, 
       "shift": "2", 
       "shift_view": "2 смена", 
       "vacation": "2", 
       "vacation_view": "Осень",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
-      "status": true
+      "status": 1
     },
     { 
       "id": 3,  
       "name": "Саша", 
       "desc": "Коллега", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "8000", 
+      "salary": 8000, 
       "shift": "3", 
       "shift_view": "3 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
       "skill": "2",  
       "skill_view": "Чтение тех документации",
-      "status": false
+      "status": 0
     },
     { 
       "id": 4,  
       "name": "Ваня", 
       "desc": "Напарник", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "12000", 
+      "salary": 12000, 
       "shift": "1", 
       "shift_view": "1 смена", 
       "vacation": "4", 
       "vacation_view": "Весна",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
-      "status": true
+      "status": 1
 
     },
     { 
@@ -62,56 +62,56 @@
       "name": "Коля", 
       "desc": "Коллега", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "9500", 
+      "salary": 9500, 
       "shift": "2", 
       "shift_view": "2 смена", 
       "vacation": "2", 
       "vacation_view": "Осень",
       "skill": "2",  
       "skill_view": "Чтение тех документации",
-      "status": true
+      "status": 1
     },
     { 
       "id": 6,  
       "name": "Вася_2", 
       "desc": "Коллега", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "45000", 
+      "salary": 45000, 
       "shift": "3", 
       "shift_view": "3 смена", 
       "vacation": "3", 
       "vacation_view": "Зима",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
-      "status": true
+      "status": 1
     }, 
     { 
       "id": 7,  
       "name": "Саша_2", 
       "desc": "Сосед", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "51200", 
+      "salary": 51200, 
       "shift": "1", 
       "shift_view": "1 смена", 
       "vacation": "3", 
       "vacation_view": "Зима",
       "skill": "3",  
       "skill_view": "Знание Linux",
-      "status": false
+      "status": 0
     }, 
     { 
       "id": 8,  
       "name": "Катя", 
       "desc": "Напарник", 
       "date": "1996-11-25 03:31:27", 
-      "salary": "10100", 
+      "salary": 10100, 
       "shift": "2", 
       "shift_view": "2 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
       "skill": "3",  
       "skill_view": "Знание Linux",
-      "status": false
+      "status": 0
     }
   ]
 }

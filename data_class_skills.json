@@ -4,7 +4,11 @@
   "ClassSEQName": "",
   "PrimaryKeyList": "",
   "ColumnList": "",
-  "FieldList": [],
+  "FieldList": [
+    {"name": "skill_id", "type": "number"},
+    {"name": "skill", "type": "string"},
+    {"name": "desc", "type": "string"}
+  ],
   "InvisibleColumns": "skill_id",
   "PrivList": "",
   "QuickSearch": "",

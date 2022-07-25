@@ -4,7 +4,12 @@
   "ClassSEQName": "",
   "PrimaryKeyList": "",
   "ColumnList": "",
-  "FieldList": [],
+  "FieldList": [
+    {"name": "id", "type": "number"},
+    {"name": "vacation", "type": "string"},
+    {"name": "date", "type": "date"},
+    {"name": "desc", "type": "string"}
+  ],
   "InvisibleColumns": "id",
   "PrivList": "",
   "QuickSearch": "desc",

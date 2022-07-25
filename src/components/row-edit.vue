@@ -6,7 +6,11 @@
         v-model="RowOper[name]"
         :label="ViewProperties.find(item => Object.keys(item).join('') == name)[name].Name" 
         :disabled="ViewProperties.find(item => Object.keys(item).join('') == name)[name].ReadOnly && editedIndex != -1"
-        :rules="[ViewProperties.find(item => Object.keys(item).join('') == name)[name].AllowBlank ? true :  () => !!RowOper[name] || 'Заполните поле!']"
+        :rules="[
+          ViewProperties.find(item => Object.keys(item).join('') == name)[name].AllowBlank ? true : () => !!RowOper[name] || 'Заполните поле!',
+          !(!!ViewProperties.find(item => Object.keys(item).join('') == name)[name].MinValue) ? true : () => Number(RowOper[name]) > ViewProperties.find(item => Object.keys(item).join('') == name)[name].MinValue || `Не меньше ${ViewProperties.find(item => Object.keys(item).join('') == name)[name].MinValue}!`,
+          !(!!ViewProperties.find(item => Object.keys(item).join('') == name)[name].MaxValue) ? true : () => Number(RowOper[name]) < ViewProperties.find(item => Object.keys(item).join('') == name)[name].MaxValue || `Не больше ${ViewProperties.find(item => Object.keys(item).join('') == name)[name].MaxValue}!`,
+        ]"
       >
       </v-text-field>
               

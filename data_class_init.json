@@ -2,9 +2,22 @@
   "ClassCaption": "Начальная модель",
   "TablesName": "Initial",
   "ClassSEQName": "",
-  "PrimaryKeyList": "",
+  "PrimaryKeyList": "id",
   "ColumnList": "",
-  "FieldList": [],
+  "FieldList": [
+    {"name": "id", "type": "number"},
+    {"name": "name", "type": "string"},
+    {"name": "desc", "type": "string"},
+    {"name": "date", "type": "date"},
+    {"name": "salary", "type": "number"},    
+    {"name": "shift", "type": "string"},
+    {"name": "shift_view", "type": "string"},
+    {"name": "vacation", "type": "string"},
+    {"name": "vacation_view", "type": "string"},
+    {"name": "skill", "type": "string"},
+    {"name": "skill_view", "type": "string"},
+    {"name": "skill_view", "type": "number"}
+  ],
   "InvisibleColumns": "id,shift,vacation,skill",
   "PrivList": "",
   "QuickSearch": "desc,name",
@@ -54,7 +67,9 @@
         "Sortable": true, 
         "ReadOnly": false,
         "IsMultiSelect": false,
-        "AllowBlank": false
+        "AllowBlank": false,
+        "MinValue": 7000,
+        "MaxValue": 60000
       } 
     },
     {

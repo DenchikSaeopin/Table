@@ -124,7 +124,7 @@
           :key="key"
           v-model="item[check_item.check_header]"
           disabled
-        >  
+        >
         </v-simple-checkbox>
       </template>  
 
@@ -263,7 +263,15 @@ export default {
     this.ViewProperties.forEach(item => {
       for(let key in item) {
         if(item[key].PropType == "CHECKBOX") {
-          this.headers_checkbox.push({"check_header": key, "number": count+=1})  
+          this.headers_checkbox.push({"check_header": key, "number": count+=1})
+          
+          this.dataset.forEach(row => {
+            for(let key_ds in row) {
+              if(key_ds == key) {
+                row[key_ds] = !!row[key_ds]
+              }
+            }
+          })   
         }          
       } 
     });
