@@ -457,7 +457,6 @@ export default {
     },
 
     filtered_dataset() {
-
       return this.dataset.filter((item) => {
         let result = true;
         

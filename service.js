@@ -1,5 +1,7 @@
 import data_class_init from '/data_class_init.json';  
 import data_class_vacation from '/data_class_vacation.json';
+import data_class_schedule from '/data_class_schedule.json'; 
+import dataset_schedule from '/dataset_schedule.json';
 import data_class_skills from '/data_class_skills.json'; 
 import dataset_skills from '/dataset_skills.json';
 import dataset from '/dataset.json';
@@ -12,6 +14,9 @@ export default function data_class_srv(class_name) {
   }
   if(class_name == "data_class_vacation") {
     return {data_class: data_class_vacation, dataset: dataset_vacation.dataset}
+  }
+  if(class_name == "data_class_schedule") {
+    return {data_class: data_class_schedule, dataset: dataset_schedule.dataset}
   }
   if(class_name == "data_class_skills") {
     return {data_class: data_class_skills, dataset: dataset_skills.dataset}

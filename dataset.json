@@ -10,6 +10,8 @@
       "shift_view": "1 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
+      "schedule": "1",
+      "schedule_view": "Полный день",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
       "status": 1    
@@ -24,6 +26,8 @@
       "shift_view": "2 смена", 
       "vacation": "2", 
       "vacation_view": "Осень",
+      "schedule": "1",
+      "schedule_view": "Полный день",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
       "status": 1
@@ -38,6 +42,8 @@
       "shift_view": "3 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
+      "schedule": "3",
+      "schedule_view": "Удаленная работа",
       "skill": "2",  
       "skill_view": "Чтение тех документации",
       "status": 0
@@ -52,6 +58,8 @@
       "shift_view": "1 смена", 
       "vacation": "4", 
       "vacation_view": "Весна",
+      "schedule": "1",
+      "schedule_view": "Полный день",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
       "status": 1
@@ -67,6 +75,8 @@
       "shift_view": "2 смена", 
       "vacation": "2", 
       "vacation_view": "Осень",
+      "schedule": "1",
+      "schedule_view": "Полный день",
       "skill": "2",  
       "skill_view": "Чтение тех документации",
       "status": 1
@@ -81,6 +91,8 @@
       "shift_view": "3 смена", 
       "vacation": "3", 
       "vacation_view": "Зима",
+      "schedule": "2",
+      "schedule_view": "Гибкий график",
       "skill": "1",  
       "skill_view": "Работа с компьютером",
       "status": 1
@@ -95,6 +107,8 @@
       "shift_view": "1 смена", 
       "vacation": "3", 
       "vacation_view": "Зима",
+      "schedule": "1",
+      "schedule_view": "Полный день",
       "skill": "3",  
       "skill_view": "Знание Linux",
       "status": 0
@@ -109,6 +123,8 @@
       "shift_view": "2 смена", 
       "vacation": "1", 
       "vacation_view": "Лето",
+      "schedule": "2",
+      "schedule_view": "Гибкий график",
       "skill": "3",  
       "skill_view": "Знание Linux",
       "status": 0

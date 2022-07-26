@@ -81,7 +81,11 @@ export default {
     IsMultiSelect: {
       type: Boolean,
       required: true    
-    } 
+    },
+    UseConstrain: {
+      type: Boolean,
+      required: true
+    }  
   },
   
   data() {
@@ -112,6 +116,10 @@ export default {
           this.selected_rows.push(item)
         } 
       })
+    }
+    
+    if(this.UseConstrain == true) {
+      this.dataset = this.dataset.filter(row => JSON.stringify(row) != JSON.stringify(this.selected_rows[0]))
     }
   },
 

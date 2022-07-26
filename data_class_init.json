@@ -14,11 +14,13 @@
     {"name": "shift_view", "type": "string"},
     {"name": "vacation", "type": "string"},
     {"name": "vacation_view", "type": "string"},
+    {"name": "schedule", "type": "string"},
+    {"name": "schedule_view", "type": "string"},
     {"name": "skill", "type": "string"},
     {"name": "skill_view", "type": "string"},
-    {"name": "skill_view", "type": "number"}
+    {"name": "status", "type": "number"}
   ],
-  "InvisibleColumns": "id,shift,vacation,skill",
+  "InvisibleColumns": "id,shift,vacation,schedule,skill",
   "PrivList": "",
   "QuickSearch": "desc,name",
   "ViewProperties": [
@@ -98,7 +100,24 @@
         "LookupKeyFieldName": "id", 
         "LookupResultFieldName": "vacation",
         "IsMultiSelect": true,
-        "AllowBlank": false
+        "AllowBlank": false, 
+        "UseConstrain": false
+      }
+    },
+    {
+      "schedule_view": { 
+        "Name": "График работы",  
+        "PropType": "data_class_schedule", 
+        "DisplayFormat": "", 
+        "Align": "left", 
+        "Sortable": false, 
+        "ReadOnly": false, 
+        "KeyFieldName": "schedule", 
+        "LookupKeyFieldName": "id", 
+        "LookupResultFieldName": "schedule",
+        "IsMultiSelect": false,
+        "AllowBlank": false, 
+        "UseConstrain": true
       }
     },
     {

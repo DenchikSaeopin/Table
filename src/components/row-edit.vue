@@ -55,6 +55,7 @@
         :LookupKeyFieldName="ViewProperties.find(item => Object.keys(item).join('') == name)[name].LookupKeyFieldName"
         :LookupResultFieldName="ViewProperties.find(item => Object.keys(item).join('') == name)[name].LookupResultFieldName"
         :IsMultiSelect="ViewProperties.find(item => Object.keys(item).join('') == name)[name].IsMultiSelect"
+        :UseConstrain="ViewProperties.find(item => Object.keys(item).join('') == name)[name].UseConstrain"
 
         :comboObj_class="comboObj_class(name)"
         @change="updateObj_class"

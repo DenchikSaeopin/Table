@@ -2,7 +2,7 @@
   "ClassCaption": "Отпуска",
   "TablesName": "Vacation",
   "ClassSEQName": "",
-  "PrimaryKeyList": "",
+  "PrimaryKeyList": "id",
   "ColumnList": "",
   "FieldList": [
     {"name": "id", "type": "number"},

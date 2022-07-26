@@ -1,40 +1,38 @@
 {
-  "ClassCaption": "Навыки",
-  "TablesName": "Skills",
+  "ClassCaption": "График работы",
+  "TablesName": "Schedule",
   "ClassSEQName": "",
-  "PrimaryKeyList": "skill_id",
+  "PrimaryKeyList": "id",
   "ColumnList": "",
   "FieldList": [
-    {"name": "skill_id", "type": "number"},
-    {"name": "skill", "type": "string"},
-    {"name": "desc", "type": "string"}
+    {"name": "id", "type": "number"},
+    {"name": "schedule", "type": "string"},
+    {"name": "date", "type": "date"}
   ],
-  "InvisibleColumns": "skill_id",
+  "InvisibleColumns": "id",
   "PrivList": "",
   "QuickSearch": "",
   "ViewProperties": [
     {
-      "skill": { 
-        "Name": "Навык", 
+      "schedule": { 
+        "Name": "График работы", 
         "PropType": "SIMPLE", 
         "DisplayFormat": "", 
         "Align": "left", 
         "Sortable": false, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
-        "AllowBlank": false
+        "IsMultiSelect": false
       } 
-    },             
+    },              
     {
       "desc": { 
-        "Name": "Дополнительно",  
+        "Name": "Подробно",  
         "PropType": "SIMPLE", 
         "DisplayFormat": "", 
         "Align": "left", 
         "Sortable": false, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
-        "AllowBlank": false
+        "IsMultiSelect": false
       } 
     }  
   ],
