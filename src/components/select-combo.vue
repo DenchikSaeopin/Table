@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       nameText: Object.keys(this.comboObj)[0], // отображение
-      keyFieldName: Object.keys(this.comboObj)[1], //значение
+      keyFieldName: Object.keys(this.comboObj)[1], // значение
     }
   },
 
@@ -84,7 +84,7 @@ export default {
           let obj_1 = {}
 
           obj_1[this.nameText] = item[0]
-          obj_1[this.keyFieldName] = item[1] 
+          obj_1[this.keyFieldName] = Number(item[1])  
           
           items.push(obj_1)
         })

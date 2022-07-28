@@ -8,19 +8,12 @@
     
     <v-card>
       <v-toolbar dark color="primary">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn icon dark @click="ComponentDialog = false" v-bind="attrs" v-on="on">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </template>
-          <span>Закрыть</span>
-        </v-tooltip>
         <v-toolbar-title>{{data_class.ClassCaption}}</v-toolbar-title>           
       </v-toolbar> 
      
       <table-class :dataClass="data_class" :data="dataset" :selected_rows="selected_rows">
         <template v-slot:default="TableProps">
+          
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
               <v-btn :disabled="(IsMultiSelect == false && TableProps.selected.length != 1) || (IsMultiSelect == true && TableProps.selected.length == 0)" v-bind="attrs" v-on="on" @click="save(TableProps)" icon x-small fab>
@@ -28,7 +21,8 @@
               </v-btn>
             </template>
             <span>Сохранить</span>
-          </v-tooltip>                    
+          </v-tooltip> 
+
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
               <v-btn v-bind="attrs" v-on="on" @click="save_empty(TableProps)" icon x-small fab>
@@ -36,6 +30,14 @@
               </v-btn>
             </template>
             <span>Сохранить пустой выбор</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn v-bind="attrs" v-on="on" @click="ComponentDialog = false" icon x-small fab>
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </template>
+            <span>Закрыть</span>
           </v-tooltip>  
         </template>  
       </table-class>
@@ -120,6 +122,7 @@ export default {
     
     if(this.UseConstrain == true) {
       this.dataset = this.dataset.filter(row => JSON.stringify(row) != JSON.stringify(this.selected_rows[0]))
+      this.selected_rows = []
     }
   },
 

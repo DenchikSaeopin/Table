@@ -8,15 +8,16 @@
     {"name": "id", "type": "number"},
     {"name": "name", "type": "string"},
     {"name": "desc", "type": "string"},
-    {"name": "date", "type": "date"},
+    {"name": "date_time", "type": "date"},
+    {"name": "date", "type": "date"}, 
     {"name": "salary", "type": "number"},    
-    {"name": "shift", "type": "string"},
+    {"name": "shift", "type": "number"},
     {"name": "shift_view", "type": "string"},
-    {"name": "vacation", "type": "string"},
+    {"name": "vacation", "type": "number"},
     {"name": "vacation_view", "type": "string"},
-    {"name": "schedule", "type": "string"},
+    {"name": "schedule", "type": "number"},
     {"name": "schedule_view", "type": "string"},
-    {"name": "skill", "type": "string"},
+    {"name": "skill", "type": "number"},
     {"name": "skill_view", "type": "string"},
     {"name": "status", "type": "number"}
   ],
@@ -32,7 +33,6 @@
         "Align": "left", 
         "Sortable": false, 
         "ReadOnly": true,
-        "IsMultiSelect": false,
         "AllowBlank": false
       } 
     },       
@@ -44,20 +44,29 @@
         "Align": "left", 
         "Sortable": false, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
         "AllowBlank": true
       } 
     },        
     {
-      "date": { 
+      "date_time": { 
         "Name": "Дата записи",  
         "PropType": "DATETIME", 
         "DisplayFormat": "DD-MM-YYYY", 
         "Align": "left", 
         "Sortable": true, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
         "AllowBlank": false
+      } 
+    }, 
+    {
+      "date": { 
+        "Name": "Дата регистрации",  
+        "PropType": "DATE", 
+        "DisplayFormat": "DD-MM-YY", 
+        "Align": "left", 
+        "Sortable": true, 
+        "ReadOnly": false,
+        "AllowBlank": true
       } 
     }, 
     {
@@ -68,7 +77,6 @@
         "Align": "left", 
         "Sortable": true, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
         "AllowBlank": false,
         "MinValue": 7000,
         "MaxValue": 60000
@@ -84,7 +92,6 @@
         "ReadOnly": false, 
         "ComboList": "1 смена=1;2 смена=2;3 смена=3", 
         "KeyFieldName": "shift",
-        "IsMultiSelect": false,
         "AllowBlank": false
       } 
     },
@@ -99,7 +106,7 @@
         "KeyFieldName": "vacation", 
         "LookupKeyFieldName": "id", 
         "LookupResultFieldName": "vacation",
-        "IsMultiSelect": true,
+        "IsMultiSelect": false,
         "AllowBlank": false, 
         "UseConstrain": false
       }
@@ -132,7 +139,6 @@
         "ComboClass": "data_class_skills", 
         "LookupKeyFieldName": "skill_id",
         "LookupResultFieldName": "skill",
-        "IsMultiSelect": false,
         "AllowBlank": true
       }   
     },
@@ -144,7 +150,6 @@
         "Align": "left", 
         "Sortable": false, 
         "ReadOnly": false,
-        "IsMultiSelect": false,
         "AllowBlank": true  
       }  
     }

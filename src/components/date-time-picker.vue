@@ -32,10 +32,11 @@
         
         <v-tabs-items v-model="tab">          
           <v-tab-item value="date">
-            <v-date-picker v-model="date" class="rounded-0" @input="tab = 'time'" full-width locale="ru"></v-date-picker>
+            <v-date-picker v-model="date" class="rounded-0" @input="PropType == 'DATETIME' ? tab = 'time' : tab = 'date'" full-width locale="ru"></v-date-picker>
           </v-tab-item>        
           <v-tab-item value="time">
             <v-time-picker
+              :disabled="PropType != 'DATETIME'"
               :key="tab"
               v-model="time"
               format="24hr"
@@ -83,8 +84,8 @@ export default {
 
   data() {
     return {
-      date: null,
-      time: null,
+      date: this.value.split(" ")[0],
+      time: this.value.split(" ")[1],
       tab: false,
       DateTimeDialog: false,
       persistent: true,
@@ -92,20 +93,11 @@ export default {
     }
   },
   
-  // watch: {
-  //   DateTimeDialog(val) {
-  //     if(val && this.DateTimeValue) {
-  //       this.date = (new Date(new Date(this.DateTimeValue) - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
-  //       this.time = new Date(this.DateTimeValue).toLocaleTimeString()
-  //     }
-  //   }
-  // },
-
   methods: {
     closeDialog() {
       this.DateTimeDialog = false;
-      this.DateTimeValue = `${this.date} ${this.time}`
-      this.$emit("input", `${this.date} ${this.time}`)
+      this.DateTimeValue = this.date ? `${this.date} ${this.time ? this.time : ""}` : ""
+      this.$emit("input", this.DateTimeValue)
     }
   },
 

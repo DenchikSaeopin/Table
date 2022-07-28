@@ -6,7 +6,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn :disabled="!dif_columns.length" v-bind="attrs" v-on="on" @click="show_all_col" icon x-small fab> 
               <v-icon>mdi-eye-outline</v-icon>
-            </v-btn>                        
+            </v-btn>
           </template>
           <span>Отобразить все скрытые поля</span>
         </v-tooltip>
@@ -21,21 +21,21 @@
             <v-list-item v-for="(col, key) in dif_columns" :key="key" @click="show_column(col.name)" > 
               <v-list-item-title>{{ col.text }}</v-list-item-title>
             </v-list-item>
-          </v-list>                        
+          </v-list>
         </v-menu>
       </v-btn-toggle>
       
       <v-divider class="mx-4" vertical></v-divider>
       
-      <v-btn-toggle> 
+      <v-btn-toggle>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
-            <v-btn :disabled="!selected.length" v-bind="attrs" v-on="on" @click="delete_rows" icon x-small fab> 
+            <v-btn :disabled="!selected.length" v-bind="attrs" v-on="on" @click="delete_rows" icon x-small fab>
               <v-icon>mdi-table-row-remove</v-icon>
-            </v-btn>                        
+            </v-btn>
           </template>
           <span>Удалить выбранные строки</span>
-        </v-tooltip>  
+        </v-tooltip>
 
         <v-tooltip bottom> 
           <template v-slot:activator="{ on, attrs }">
@@ -350,11 +350,6 @@ export default {
           }        
         }
         
-        // if(PropType == "CHECKBOX") {
-        //   if(DisplayFormat == "checkbox") {
-        //     val = !!val       
-        //   }        
-        // }
         return val;        
       }
     },
