@@ -28,6 +28,15 @@
       <v-divider class="mx-4" vertical></v-divider>
       
       <v-btn-toggle>
+        <v-tooltip bottom> 
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn @click="dialog = true; destroy_comp = true" v-bind="attrs" v-on="on" icon x-small fab>
+              <v-icon>mdi-table-row-plus-after</v-icon>
+            </v-btn>
+          </template>  
+          <span>Добавить строку</span>
+        </v-tooltip>
+
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-btn :disabled="!selected.length" v-bind="attrs" v-on="on" @click="delete_rows" icon x-small fab>
@@ -48,12 +57,12 @@
 
         <v-tooltip bottom> 
           <template v-slot:activator="{ on, attrs }">
-            <v-btn @click="dialog = true; destroy_comp = true" v-bind="attrs" v-on="on" icon x-small fab>
-              <v-icon>mdi-table-row-plus-after</v-icon>
+            <v-btn :disabled="selected.length == 0" @click="copy" v-bind="attrs" v-on="on" icon x-small fab>
+              <v-icon>mdi-content-copy</v-icon>
             </v-btn>
           </template>  
-          <span>Добавить строку</span>
-        </v-tooltip> 
+          <span>Копировать выбранные строки</span>
+        </v-tooltip>
 
         <v-dialog v-model="dialog" max-width="500px">          
           <v-card>
@@ -109,7 +118,7 @@
       show-select
       :headers="headers"
       :items="filtered_dataset"
-      :items-per-page="5"
+      :items-per-page="10"
       class="elevation-1"      
     > 
 
@@ -215,25 +224,21 @@ export default {
       hiddenColumns: [],
       editedIndex: -1,
       headers_checkbox: [],
-
-      dialog: false,
-      
       RowOper: {},
       defaultItem: {},
 
-      dataset: this.data,
-      
-      ViewProperties: this.dataClass.ViewProperties,
-
-      QuickSearch: this.dataClass.QuickSearch,
-      InvisibleColumns: this.dataClass.InvisibleColumns,
-
-      selected: this.selected_rows ? this.selected_rows : [],
-
+      dialog: false,
       destroy_comp: false,
-
       valid: true,
       
+      dataset: this.data,
+      ViewProperties: this.dataClass.ViewProperties,
+      QuickSearch: this.dataClass.QuickSearch,
+      InvisibleColumns: this.dataClass.InvisibleColumns,
+      DefaultValues: this.dataClass.DefaultValues,
+      PrimaryKeyList: this.dataClass.PrimaryKeyList,
+
+      selected: this.selected_rows ? this.selected_rows : [],       
     }
   },
 
@@ -252,10 +257,12 @@ export default {
     
     this.filters = this.get_filters();
 
-    this.ViewProperties.forEach((item) => {   // создание пустого объекта типа: {name: '', desc: '', date: '', salary: ''}
-       for(let key in item) {
-        this.RowOper[key] = ''  
-        this.defaultItem[key] = ''                            
+    this.DefaultValues.forEach((item) => {   // создание дефолтного объекта типа: {name: '...', desc: '...', date: '...', salary: '...'}
+      for(let key in item) {
+        if(item[key].type == "bool") { item[key].value = !!item[key].value }
+        
+        this.RowOper[key] = item[key].value  
+        this.defaultItem[key] = item[key].value                              
       }  
     })
 
@@ -415,9 +422,10 @@ export default {
 
     save() { 
       if(this.$refs.form.validate()) {
-        if (this.editedIndex > -1) {  // возможно здесь следует прописать добавление скрытых полей 
+        if (this.editedIndex > -1) {  
           Object.assign(this.dataset[this.editedIndex], this.RowOper)
         } else {
+          this.RowOper[this.PrimaryKeyList] = this.dataset.length + 1
           this.dataset.push(this.RowOper) 
         }
         this.cancel()
@@ -425,6 +433,15 @@ export default {
         this.destroy_comp = false;
       }
     },
+
+    copy() {
+      let selected_copy = JSON.parse(JSON.stringify(this.selected))
+
+      selected_copy.forEach(item => {
+        item[this.PrimaryKeyList] = this.dataset.length + 1
+        this.dataset.push(item)
+      }) 
+    }
 
   },
 

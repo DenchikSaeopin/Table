@@ -19,7 +19,7 @@
     {"name": "schedule_view", "type": "string"},
     {"name": "skill", "type": "number"},
     {"name": "skill_view", "type": "string"},
-    {"name": "status", "type": "number"}
+    {"name": "status", "type": "bool"}
   ],
   "InvisibleColumns": "id,shift,vacation,schedule,skill",
   "PrivList": "",
@@ -123,7 +123,7 @@
         "LookupKeyFieldName": "id", 
         "LookupResultFieldName": "schedule",
         "IsMultiSelect": false,
-        "AllowBlank": false, 
+        "AllowBlank": true, 
         "UseConstrain": true
       }
     },
@@ -154,6 +154,22 @@
       }  
     }
   ],
-  "DefaultValues": [],
+  "DefaultValues": [
+    {"id": {"type": "number", "value": 0} },
+    {"name": {"type": "string", "value": "default name"} },
+    {"desc": {"type": "string", "value": "default desc"} },
+    {"date_time": {"type": "date", "value": "1996-11-25 03:31:27"} },
+    {"date": {"type": "date", "value": ""} },
+    {"salary": {"type": "number", "value": 17000} },
+    {"shift": {"type": "number", "value": 1} },
+    {"shift_view": {"type": "string", "value": "1 смена"} },
+    {"vacation": {"type": "number", "value": 1} },
+    {"vacation_view": {"type": "string", "value": "Лето"} },
+    {"schedule": {"type": "number", "value": 1} },
+    {"schedule_view": {"type": "string", "value": "Полный день"} },
+    {"skill": {"type": "number", "value": 1} },
+    {"skill_view": {"type": "string", "value": "Работа с компьютером"} },
+    {"status": {"type": "bool", "value": 0} }
+  ],
   "SQLParams": []
 }

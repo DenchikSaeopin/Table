@@ -25,7 +25,7 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn v-bind="attrs" v-on="on" @click="save_empty(TableProps)" icon x-small fab>
+              <v-btn :disabled="AllowBlank == false" v-bind="attrs" v-on="on" @click="save_empty(TableProps)" icon x-small fab>
                 <v-icon>mdi-content-save-outline</v-icon>   
               </v-btn>
             </template>
@@ -33,7 +33,7 @@
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on" @click="ComponentDialog = false" icon x-small fab>
+              <v-btn :disabled="AllowBlank == false && TableProps.selected.length == 0" v-bind="attrs" v-on="on" @click="ComponentDialog = false" icon x-small fab>
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </template>
@@ -83,6 +83,10 @@ export default {
     IsMultiSelect: {
       type: Boolean,
       required: true    
+    },
+    AllowBlank: {
+      type: Boolean,
+      required: true      
     },
     UseConstrain: {
       type: Boolean,
