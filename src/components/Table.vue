@@ -1,6 +1,26 @@
+<!-- [x] Доработать функционал кнопки "Закрыть", чтобы при ее нажатии не сохранялись ранее выбранные несохраненные строки при переоткрытии окна -->
+<!-- [x] Доработать функционал кнопки "Сохранить", чтобы при ее самом 1ом нажатии не отображалось "Исходное значение + число строк" -->
+<!-- [x] Копирование - открытие диал окна и сохр 1 скопир строки -->
+<!-- [?] Duplicated keys warn при сохранении нескольких выборов при isMultiselect = true -->
+<!-- [?] При сохранении пустого выбора не появляются все строки (+тот которая была выбрана заранее и скрыта) -->
+<!-- [ ] Работа клавиатурой -->
+
 <template>
   <div>
     <v-toolbar flat dense>
+      <v-btn-toggle>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn @click="void(0)" v-bind="attrs" v-on="on" icon x-small fab>
+              <v-icon>mdi-database-refresh</v-icon>
+            </v-btn>
+          </template>
+          <span>Обновить данные таблицы</span>
+        </v-tooltip>        
+      </v-btn-toggle>
+      
+      <v-divider class="mx-4" vertical></v-divider>
+
       <v-btn-toggle>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -57,11 +77,11 @@
 
         <v-tooltip bottom> 
           <template v-slot:activator="{ on, attrs }">
-            <v-btn :disabled="selected.length == 0" @click="copy" v-bind="attrs" v-on="on" icon x-small fab>
+            <v-btn :disabled="selected.length != 1" @click="copy" v-bind="attrs" v-on="on" icon x-small fab>
               <v-icon>mdi-content-copy</v-icon>
             </v-btn>
           </template>  
-          <span>Копировать выбранные строки</span>
+          <span>Копировать строку</span>
         </v-tooltip>
 
         <v-dialog v-model="dialog" max-width="500px">          
@@ -81,7 +101,9 @@
                       :RowOper="RowOper" 
                       :ViewProperties="ViewProperties" 
                       :InvisibleColumns="InvisibleColumns" 
-                      :editedIndex="editedIndex">
+                      :editedIndex="editedIndex"
+                      :PrimaryKeyList = "PrimaryKeyList"  
+                    >
                     </row-edit>
                   </v-form>
                 </v-row>
@@ -115,13 +137,14 @@
 
     <v-data-table
       v-model="selected"
-      show-select
       :headers="headers"
       :items="filtered_dataset"
       :items-per-page="10"
       class="elevation-1"      
+      @click:row="row_click"
     > 
-
+    <!-- show-select -->
+    
       <!-- форматирование значений  -->
       <template v-for="slot in field_slots" v-slot:[slot.slot_name] = "{ item }">
         {{ slot.func(item[slot.field], slot.DisplayFormat, slot.PropType) }}     
@@ -226,19 +249,17 @@ export default {
       headers_checkbox: [],
       RowOper: {},
       defaultItem: {},
-
       dialog: false,
       destroy_comp: false,
       valid: true,
-      
       dataset: this.data,
       ViewProperties: this.dataClass.ViewProperties,
       QuickSearch: this.dataClass.QuickSearch,
       InvisibleColumns: this.dataClass.InvisibleColumns,
       DefaultValues: this.dataClass.DefaultValues,
       PrimaryKeyList: this.dataClass.PrimaryKeyList,
-
-      selected: this.selected_rows ? this.selected_rows : [],       
+      selected: [], 
+      selected_rows_id: []   
     }
   },
 
@@ -270,8 +291,7 @@ export default {
     this.ViewProperties.forEach(item => {
       for(let key in item) {
         if(item[key].PropType == "CHECKBOX") {
-          this.headers_checkbox.push({"check_header": key, "number": count+=1})
-          
+          this.headers_checkbox.push({"check_header": key, "number": count+=1})   
           this.dataset.forEach(row => {
             for(let key_ds in row) {
               if(key_ds == key) {
@@ -282,7 +302,11 @@ export default {
         }          
       } 
     });
- 
+   
+    if(this.selected_rows) {
+      this.selected = JSON.parse(JSON.stringify(this.selected_rows))
+      this.selected_rows.forEach(item => {this.selected_rows_id.push(item.id)})
+    }
   },
 
   methods: {
@@ -434,13 +458,28 @@ export default {
       }
     },
 
-    copy() {
-      let selected_copy = JSON.parse(JSON.stringify(this.selected))
+    copy() { 
+      this.destroy_comp = true
+      this.dialog = true
 
-      selected_copy.forEach(item => {
-        item[this.PrimaryKeyList] = this.dataset.length + 1
-        this.dataset.push(item)
-      }) 
+      this.RowOper = Object.assign({}, this.selected[0])
+      this.RowOper[this.PrimaryKeyList] = this.dataset.length + 1
+          
+    },
+
+    row_click(item, row) {
+      const id = row.item.id //temporary
+      const row_num = this.selected_rows_id.indexOf(id)
+
+      if(row_num == -1) {
+        this.selected_rows_id.push(id)
+        this.selected.push(item)
+        row.select(true)
+      } else {
+        this.selected_rows_id.splice(row_num, 1)
+        this.selected.splice(this.selected.findIndex(str => JSON.stringify(str) == JSON.stringify(item)), 1)
+        row.select(false)
+      }
     }
 
   },
@@ -553,4 +592,10 @@ export default {
     margin-bottom: 0px   
   }
 
+</style>
+
+<style>
+  tr.v-data-table__selected {
+    background: #a4ebf0 !important;
+  }
 </style>

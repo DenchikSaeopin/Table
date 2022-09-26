@@ -122,7 +122,7 @@
         "KeyFieldName": "schedule", 
         "LookupKeyFieldName": "id", 
         "LookupResultFieldName": "schedule",
-        "IsMultiSelect": false,
+        "IsMultiSelect": true,
         "AllowBlank": true, 
         "UseConstrain": true
       }
@@ -137,7 +137,7 @@
         "ReadOnly": false,
         "KeyFieldName": "skill", 
         "ComboClass": "data_class_skills", 
-        "LookupKeyFieldName": "skill_id",
+        "LookupKeyFieldName": "id",
         "LookupResultFieldName": "skill",
         "AllowBlank": true
       }   

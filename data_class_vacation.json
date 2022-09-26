@@ -48,6 +48,11 @@
       } 
     }  
   ],
-  "DefaultValues": [],
+  "DefaultValues": [
+    {"id": {"type": "number", "value": 0} },
+    {"vacation": {"type": "string", "value": "Лето"} },
+    {"date": {"type": "date", "value": "1996-11-25 03:31:27"} },
+    {"desc": {"type": "string", "value": "default desc"} }
+  ],
   "SQLParams": []
 }

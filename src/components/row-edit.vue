@@ -101,6 +101,10 @@ export default {
     dataset: {
       type: Array,
       required: true
+    },
+    PrimaryKeyList: {
+      type: String,
+      required: true
     }
   },
 
@@ -115,7 +119,6 @@ export default {
     },
     
     updateObj(newObj) {
-      // console.log(newObj)
       for(let key in newObj) {
         this.RowOper[key] = newObj[key]
       }
@@ -155,6 +158,7 @@ export default {
           for(let key in item) {
             row[key] = item[key]
           }
+          row[this.PrimaryKeyList] = this.dataset.length + 1
           this.dataset.push(row)
         });
       }

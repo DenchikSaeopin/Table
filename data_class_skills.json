@@ -2,14 +2,14 @@
   "ClassCaption": "Навыки",
   "TablesName": "Skills",
   "ClassSEQName": "",
-  "PrimaryKeyList": "skill_id",
+  "PrimaryKeyList": "id",
   "ColumnList": "",
   "FieldList": [
-    {"name": "skill_id", "type": "number"},
+    {"name": "id", "type": "number"},
     {"name": "skill", "type": "string"},
     {"name": "desc", "type": "string"}
   ],
-  "InvisibleColumns": "skill_id",
+  "InvisibleColumns": "id",
   "PrivList": "",
   "QuickSearch": "",
   "ViewProperties": [
@@ -38,6 +38,10 @@
       } 
     }  
   ],
-  "DefaultValues": [],
+  "DefaultValues": [
+    {"id": {"type": "number", "value": 0} },
+    {"skill": {"type": "string", "value": "Работа с компьютером"} },
+    {"desc": {"type": "string", "value": "default desc"} }
+  ],
   "SQLParams": []
 }

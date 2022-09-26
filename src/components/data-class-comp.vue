@@ -1,8 +1,7 @@
-<template >
+<template>
   <v-dialog v-model="ComponentDialog" :persistent="persistent">
-    <template v-slot:activator="{on ,attrs}">
-      <v-text-field :value="value" :label="label" :disabled="disabled" 
-        readonly v-bind="{ ...attrs, ...$attrs}" v-on="on">
+    <template v-slot:activator="{on, attrs}">
+      <v-text-field :value="value" :label="label" :disabled="disabled" readonly v-bind="{ ...attrs, ...$attrs}" v-on="on" @click="destroy_comp = true">
       </v-text-field>
     </template> 
     
@@ -11,12 +10,15 @@
         <v-toolbar-title>{{data_class.ClassCaption}}</v-toolbar-title>           
       </v-toolbar> 
      
-      <table-class :dataClass="data_class" :data="dataset" :selected_rows="selected_rows">
-        <template v-slot:default="TableProps">
-          
+      <table-class v-if="destroy_comp" :dataClass="data_class" :data="dataset" :selected_rows="selected_rows" >
+        <template v-slot:default="{ selected }">        
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn :disabled="(IsMultiSelect == false && TableProps.selected.length != 1) || (IsMultiSelect == true && TableProps.selected.length == 0)" v-bind="attrs" v-on="on" @click="save(TableProps)" icon x-small fab>
+              <v-btn :disabled="(IsMultiSelect == false && selected.length != 1) || (AllowBlank == false && selected.length == 0)" 
+                v-bind="attrs" v-on="on" 
+                icon x-small fab
+                @click="save(selected)" 
+              >
                 <v-icon>mdi-content-save</v-icon>   
               </v-btn>
             </template>
@@ -25,7 +27,11 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn :disabled="AllowBlank == false" v-bind="attrs" v-on="on" @click="save_empty(TableProps)" icon x-small fab>
+              <v-btn :disabled="AllowBlank == false" 
+                v-bind="attrs" v-on="on" 
+                icon x-small fab
+                @click="save_empty()" 
+              >
                 <v-icon>mdi-content-save-outline</v-icon>   
               </v-btn>
             </template>
@@ -33,7 +39,12 @@
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn :disabled="AllowBlank == false && TableProps.selected.length == 0" v-bind="attrs" v-on="on" @click="ComponentDialog = false" icon x-small fab>
+              <v-btn :disabled="AllowBlank == false && selected.length == 0" 
+                v-bind="attrs" 
+                v-on="on" 
+                icon x-small fab
+                @click="close_dialog()" 
+              >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </template>
@@ -106,7 +117,9 @@ export default {
       persistent: true,
       
       selected_rows: [],
-      comboObj_class_new: this.comboObj_class
+      comboObj_class_new: this.comboObj_class,
+
+      destroy_comp: false
     }
   },
  
@@ -123,7 +136,7 @@ export default {
         } 
       })
     }
-    
+   
     if(this.UseConstrain == true) {
       this.dataset = this.dataset.filter(row => JSON.stringify(row) != JSON.stringify(this.selected_rows[0]))
       this.selected_rows = []
@@ -131,17 +144,18 @@ export default {
   },
 
   methods: {
-    save(prop) {
-      if(prop.selected.length == 1) {
-        this.comboObj_class_new[this.keyFieldName] = prop.selected[0][this.LookupKeyFieldName] // значение
-        this.comboObj_class_new[this.nameText] = prop.selected[0][this.LookupResultFieldName] // отображение
+    save(selected) {
+      if(selected.length == 1) {
+        this.comboObj_class_new[this.keyFieldName] = selected[0][this.LookupKeyFieldName] // значение
+        this.comboObj_class_new[this.nameText] = selected[0][this.LookupResultFieldName] // отображение
 
         this.$emit('change', this.comboObj_class_new) // один объект
-        this.ComponentDialog = false      
+        this.ComponentDialog = false
+              
       } else {
         let arr_obj = []
 
-        prop.selected.forEach(item => {
+        selected.forEach(item => {
           let obj_arr = {}
           
           obj_arr[this.nameText] = item[this.LookupResultFieldName]
@@ -153,6 +167,9 @@ export default {
         this.ComponentDialog = false
       }
 
+      this.selected_rows = JSON.parse(JSON.stringify(selected)) // selected_rows = selected
+
+      this.destroy_comp = false
     },
 
     save_empty() {
@@ -161,7 +178,14 @@ export default {
 
       this.$emit('change', this.comboObj_class_new)
       this.ComponentDialog = false 
+
+      this.destroy_comp = false
     },
+
+     close_dialog() {
+      this.ComponentDialog = false
+      this.destroy_comp = false
+    }
 
   },
   

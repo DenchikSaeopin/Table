@@ -36,6 +36,10 @@
       } 
     }  
   ],
-  "DefaultValues": [],
+  "DefaultValues": [
+    {"id": {"type": "number", "value": 0} },
+    {"schedule": {"type": "string", "value": "Полный день"} },
+    {"date": {"type": "date", "value": "1996-11-25 03:31:27"} }
+  ],
   "SQLParams": []
 }
