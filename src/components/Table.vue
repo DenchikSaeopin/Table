@@ -1,8 +1,8 @@
 <!-- [x] Доработать функционал кнопки "Закрыть", чтобы при ее нажатии не сохранялись ранее выбранные несохраненные строки при переоткрытии окна -->
 <!-- [x] Доработать функционал кнопки "Сохранить", чтобы при ее самом 1ом нажатии не отображалось "Исходное значение + число строк" -->
 <!-- [x] Копирование - открытие диал окна и сохр 1 скопир строки -->
-<!-- [?] Duplicated keys warn при сохранении нескольких выборов при isMultiselect = true -->
-<!-- [?] При сохранении пустого выбора не появляются все строки (+тот которая была выбрана заранее и скрыта) -->
+<!-- [x] Duplicated keys warn при сохранении нескольких выборов при isMultiselect = true -->
+<!-- [?] При сохранении пустого выбора не появляются все строки (+та которая была выбрана заранее и скрыта) -->
 <!-- [ ] Работа клавиатурой -->
 
 <template>
@@ -139,28 +139,28 @@
       v-model="selected"
       :headers="headers"
       :items="filtered_dataset"
-      :items-per-page="10"
-      class="elevation-1"      
+      :items-per-page="5"
+      class="elevation-1"
+      :item-class="row_class_select"
       @click:row="row_click"
     > 
-    <!-- show-select -->
-    
-      <!-- форматирование значений  -->
-      <template v-for="slot in field_slots" v-slot:[slot.slot_name] = "{ item }">
-        {{ slot.func(item[slot.field], slot.DisplayFormat, slot.PropType) }}     
-      </template> 
+  
+    <!-- ФОРМАТИРОВАНИЕ ЗНАЧЕНИЙ -->
+    <template v-for="slot in field_slots" v-slot:[slot.slot_name] = "{ item }">
+      {{ slot.func(item[slot.field], slot.DisplayFormat, slot.PropType) }}     
+    </template>
 
-      <!-- CHECKBOX -->
-      <template v-for="(check_item, key) in headers_checkbox" v-slot:[`item.${check_item.check_header}`] = "{ item }">
-        <v-simple-checkbox
-          :key="key"
-          v-model="item[check_item.check_header]"
-          disabled
-        >
-        </v-simple-checkbox>
-      </template>  
+    <!-- CHECKBOX -->
+    <template v-for="(check_item, key) in headers_checkbox" v-slot:[`item.${check_item.check_header}`] = "{ item }">
+      <v-simple-checkbox
+        :key="key"
+        v-model="item[check_item.check_header]"
+        disabled
+      >
+      </v-simple-checkbox>
+    </template>  
 
-      <!-- работа со значениями по столбцам    -->
+      <!-- РАБОТА СО СТОЛБЦАМИ -->
       <template v-for="(col, key) in headers" v-slot:[`header.${col.value}`] = "{ header }"> 
         {{ header.text }}
           <v-menu :key="key" offset-x transition="scale-transition" :close-on-content-click="false" :ref="`menu_${col.value}`">
@@ -174,7 +174,8 @@
               >
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
-            </template>                            
+            </template> 
+
             <v-list class="menu">
               <v-list-item @click="hide_column(col.value, col.text)">                      
                 <v-list-item-icon class="hide_col">
@@ -237,6 +238,11 @@ export default {
     selected_rows: {
       type: Array,
       default: null
+    },
+
+    highlighted_row_index: {
+      type: Number,
+      default: -1
     }
   },
 
@@ -259,7 +265,10 @@ export default {
       DefaultValues: this.dataClass.DefaultValues,
       PrimaryKeyList: this.dataClass.PrimaryKeyList,
       selected: [], 
-      selected_rows_id: []   
+      selected_rows_id: [], 
+      highlightIndex: -1,
+      highlightIndex_init: -1,
+      //selected_init: [] // сохранение исходного selected (его подсветка) после закрытия диалогового окна
     }
   },
 
@@ -305,8 +314,18 @@ export default {
    
     if(this.selected_rows) {
       this.selected = JSON.parse(JSON.stringify(this.selected_rows))
-      this.selected_rows.forEach(item => {this.selected_rows_id.push(item.id)})
+      this.selected_rows.forEach(item => {this.selected_rows_id.push(item[this.PrimaryKeyList])}) 
     }
+
+    if(this.highlighted_row_index) { this.highlightIndex = this.highlighted_row_index }
+  },
+
+  mounted() {
+    document.addEventListener("keyup", this.KeyHandler);
+  },
+
+  destroyed () {
+    document.removeEventListener("keyup", this.KeyHandler)
   },
 
   methods: {
@@ -433,6 +452,9 @@ export default {
       this.RowOper = Object.assign({}, this.selected[0])
       this.destroy_comp = true
       this.dialog = true
+
+      this.highlightIndex_init = this.highlightIndex
+      //this.selected_init = JSON.parse(JSON.stringify(this.selected)) // сохранение исходного selected (его подсветка) после закрытия диалогового окна
     },
 
     cancel() {
@@ -453,7 +475,12 @@ export default {
           this.dataset.push(this.RowOper) 
         }
         this.cancel()
+        
+        this.selected = [] // сохранение исходного selected (его подсветка) после закрытия диалогового окна
 
+        this.highlightIndex = this.highlightIndex_init
+        this.selected_rows_id.splice(0, this.selected_rows_id.length, this.highlightIndex_init)
+        
         this.destroy_comp = false;
       }
     },
@@ -467,21 +494,45 @@ export default {
           
     },
 
-    row_click(item, row) {
-      const id = row.item.id //temporary
+    KeyHandler() {
+      if (event.keyCode == 37 && this.highlightIndex > -1) {
+        this.highlightIndex -= 1 
+      } else if (event.keyCode == 39 && this.highlightIndex < this.dataset.length - 1) {
+        this.highlightIndex += 1
+      } else if(event.keyCode == 32 && this.highlightIndex != -1) {
+
+        const id = this.highlightIndex + 1
+        const row_num = this.selected_rows_id.indexOf(id)
+
+        if(row_num == -1) {
+          this.selected_rows_id.push(id)
+          this.selected.push(this.dataset[this.highlightIndex])
+        } else {
+          this.selected_rows_id.splice(row_num, 1)
+          this.selected.splice(this.selected.findIndex(str => JSON.stringify(str) == JSON.stringify(this.dataset[this.highlightIndex])), 1)
+        } 
+      }
+    },
+
+    row_click(item) {
+      const id = item[this.PrimaryKeyList] //вспомогательное значение
       const row_num = this.selected_rows_id.indexOf(id)
 
       if(row_num == -1) {
         this.selected_rows_id.push(id)
         this.selected.push(item)
-        row.select(true)
+        this.highlightIndex = id - 1
       } else {
         this.selected_rows_id.splice(row_num, 1)
         this.selected.splice(this.selected.findIndex(str => JSON.stringify(str) == JSON.stringify(item)), 1)
-        row.select(false)
       }
-    }
+    },
 
+    row_class_select(item) {
+      if(this.dataset.findIndex(str => JSON.stringify(str) == JSON.stringify(item)) === this.highlightIndex) {  //  БЫЛО - if(item[this.PrimaryKeyList] === this.highlightIndex)
+        return "row_highlighted"
+      }           
+    }
   },
 
   computed: {  
@@ -598,4 +649,12 @@ export default {
   tr.v-data-table__selected {
     background: #a4ebf0 !important;
   }
+  
+  .row_highlighted {
+    background-color:rgb(236, 235, 235)
+  }
+
+  /* .row_selected {
+    background-color:rgb(117, 228, 228) 
+  } */
 </style>

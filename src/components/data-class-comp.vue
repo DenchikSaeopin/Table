@@ -10,7 +10,7 @@
         <v-toolbar-title>{{data_class.ClassCaption}}</v-toolbar-title>           
       </v-toolbar> 
      
-      <table-class v-if="destroy_comp" :dataClass="data_class" :data="dataset" :selected_rows="selected_rows" >
+      <table-class v-if="destroy_comp" :dataClass="data_class" :data="dataset" :selected_rows="selected_rows" :highlighted_row_index="highlighted_row_index">
         <template v-slot:default="{ selected }">        
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
@@ -119,6 +119,8 @@ export default {
       selected_rows: [],
       comboObj_class_new: this.comboObj_class,
 
+      highlighted_row_index: 0,
+
       destroy_comp: false
     }
   },
@@ -136,10 +138,15 @@ export default {
         } 
       })
     }
+
+    let id = this.data_class.PrimaryKeyList  // вспомогательное значение
+
+    this.highlighted_row_index = this.selected_rows[0][id] - 1; 
    
     if(this.UseConstrain == true) {
       this.dataset = this.dataset.filter(row => JSON.stringify(row) != JSON.stringify(this.selected_rows[0]))
       this.selected_rows = []
+      this.highlighted_row_index = 0
     }
   },
 
