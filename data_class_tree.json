@@ -1,0 +1,26 @@
+{
+  "ClassCaption": "Группы счетчиков",
+  "PrimaryKeyList": "PATH", 
+  "ViewProperties": [
+    {
+      "NODE_NAME": {
+        "Name": "Наименование",
+        "PropType": "TREE",
+        "Flex": "2"
+      }
+    },
+    {
+      "SIGN": {
+        "Name": "Знак",
+        "PropType": "COMBO",
+        "Align": "center",
+        "ComboList": "+=1;-=-1",
+        "Flex": "1"
+      }
+    }
+  ],
+  "SQLParams": [
+    { "name": "begdate", "type": "string"},
+    { "name": "enddate", "type": "string"}
+  ] 
+}

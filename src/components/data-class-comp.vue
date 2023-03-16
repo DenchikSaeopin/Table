@@ -14,10 +14,11 @@
         <template v-slot:default="{ selected }">        
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">  
-              <v-btn :disabled="(IsMultiSelect == false && selected.length != 1) || (AllowBlank == false && selected.length == 0)" 
+              <v-btn :disabled="(IsMultiSelect == false && selected.length != 1) || (AllowBlank == false && selected.length == 0)"
                 v-bind="attrs" v-on="on" 
                 icon x-small fab
-                @click="save(selected)" 
+                @click="save(selected)"
+                autofocus 
               >
                 <v-icon>mdi-content-save</v-icon>   
               </v-btn>
@@ -121,7 +122,7 @@ export default {
 
       highlighted_row_index: 0,
 
-      destroy_comp: false
+      destroy_comp: true
     }
   },
  

@@ -2,10 +2,12 @@
 <!-- [x] Доработать функционал кнопки "Сохранить", чтобы при ее самом 1ом нажатии не отображалось "Исходное значение + число строк" -->
 <!-- [x] Копирование - открытие диал окна и сохр 1 скопир строки -->
 <!-- [x] Duplicated keys warn при сохранении нескольких выборов при isMultiselect = true -->
+<!-- [x] Работа клавиатурой -->
 <!-- [?] При сохранении пустого выбора не появляются все строки (+та которая была выбрана заранее и скрыта) -->
-<!-- [ ] Работа клавиатурой -->
+<!-- [ ] В таблице диалогового окна не работает addEventListener -->
 
 <template>
+  <!-- <div id="table"> -->
   <div>
     <v-toolbar flat dense>
       <v-btn-toggle>
@@ -68,7 +70,7 @@
 
         <v-tooltip bottom> 
           <template v-slot:activator="{ on, attrs }">
-            <v-btn :disabled="selected.length != 1" @click="editItem" v-bind="attrs" v-on="on"  icon x-small fab>
+            <v-btn :disabled="selected.length != 1" @click="editItem" v-bind="attrs" v-on="on" icon x-small fab>
               <v-icon>mdi-table-row</v-icon>
             </v-btn>
           </template>  
@@ -143,6 +145,8 @@
       class="elevation-1"
       :item-class="row_class_select"
       @click:row="row_click"
+      dense
+      ref="table"
     > 
   
     <!-- ФОРМАТИРОВАНИЕ ЗНАЧЕНИЙ -->
@@ -150,7 +154,7 @@
       {{ slot.func(item[slot.field], slot.DisplayFormat, slot.PropType) }}     
     </template>
 
-    <!-- CHECKBOX -->
+    <!-- CHECKBOX КОЛОНКА-->
     <template v-for="(check_item, key) in headers_checkbox" v-slot:[`item.${check_item.check_header}`] = "{ item }">
       <v-simple-checkbox
         :key="key"
@@ -318,14 +322,18 @@ export default {
     }
 
     if(this.highlighted_row_index) { this.highlightIndex = this.highlighted_row_index }
+
+
   },
 
   mounted() {
-    document.addEventListener("keyup", this.KeyHandler);
+    const table = this.$refs.table.$el.querySelector('table')    // not work
+    table.addEventListener("keyup", this.KeyHandler);
   },
 
   destroyed () {
-    document.removeEventListener("keyup", this.KeyHandler)
+    const table = this.$refs.table.$el.querySelector('table')
+    table.removeEventListener("keyup", this.KeyHandler)
   },
 
   methods: {
@@ -495,11 +503,11 @@ export default {
     },
 
     KeyHandler() {
-      if (event.keyCode == 37 && this.highlightIndex > -1) {
+      if (event.keyCode == 38 && this.highlightIndex > -1) {
         this.highlightIndex -= 1 
-      } else if (event.keyCode == 39 && this.highlightIndex < this.dataset.length - 1) {
+      } else if (event.keyCode == 40 && this.highlightIndex < this.dataset.length - 1) {
         this.highlightIndex += 1
-      } else if(event.keyCode == 32 && this.highlightIndex != -1) {
+      } else if(event.keyCode == 17 && this.highlightIndex != -1) {
 
         const id = this.highlightIndex + 1
         const row_num = this.selected_rows_id.indexOf(id)
@@ -541,7 +549,7 @@ export default {
                  
       for (let value in this.dataset[0]) {
         if (!(this.hiddenColumns.find(item => item.name == value))) {
-          this.ViewProperties.forEach ((item) => {
+          this.ViewProperties.forEach (item => {
             for(let key in item) {
               if(key == value) {                
                 result.push({ 
@@ -559,7 +567,7 @@ export default {
     },
 
     filtered_dataset() {
-      return this.dataset.filter((item) => {
+      return this.dataset.filter(item => {
         let result = true;
         
         for(let field in this.filters) {         
